@@ -21,12 +21,10 @@ class DB_Connect{
 		require_once 'config.php';
 
 		// Connecting to mysql
-		$con = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
-
+		$con= mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
 		// Check connection
-		if (mysqli_connect_errno()) {
-		    printf("Connect failed: %s\n", mysqli_connect_error());
-		    exit();
+		if(!$con){
+			die('Could not connect: ' . mysql_error());
 		}
 		// return database handler
 		//echo "Database Connection succeed.<br>";

@@ -79,7 +79,7 @@ if ($query)
 	</HEAD>
 	<BODY>
 	<DIV style = "width:100%">
-		<DIV style = "width:30%;float:left;">
+	<DIV style = "width:30%;float:left;">
 		<FORM accept-charset="utf-8" method="get">
 			<LABEL for = "q">Search:</LABEL>
 			<INPUT id = "q" name = "q" type = "text" value="<?php echo htmlspecialchars($query, ENT_QUOTES, 'utf-8');?>"/>

@@ -23,11 +23,12 @@ class DB_Functions{
 	 * Get user by email and password
 	 */
 	public function getUserByEmailAndPassword($email, $password){
-		$result = mysqli_query( $this->db_link, "SELECT * FROM users WHERE email = '$email'") or die(mysqli_error($this->db_link));
+		$select = mysql_select_db("test", $this->db_link) or die("Could not select example");
+		$result = mysql_query("SELECT * FROM users WHERE email = '$email'");
 		// check for result
-		$no_of_rows = mysqli_num_rows($result);
+		$no_of_rows = mysql_num_rows($result);
 		if ($no_of_rows > 0){
-			$result = mysqli_fetch_array($result);
+			$result = mysql_fetch_array($result);
 			return $result;
 		}else{
 			return false;
@@ -49,6 +50,7 @@ class DB_Functions{
 			return false;
 		}
 	
+	}
 }
 
 ?>

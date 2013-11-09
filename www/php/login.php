@@ -15,29 +15,29 @@ if (isset($_POST['email'])){
 	$email = $_POST['email'];
 	$password = $_POST['password'];
 	$user = $db->getUserByEmailAndPassword($email, $password);
-	//if ($user != false){
+	if ($user != false){
 		// user found
 		// echo json with success = 1
 		$response['success'] = 1;
-		//$response['uid'] = $user['unique_id'];
-		//$response['user']['name'] = $user['name'];
-		$response['user']['name'] = "Tao Hu";
-		//$response['user']['location'] = $user['location'];
-		$response['user']['location'] = "San Francisco";
-		//$response['user']['created_at'] = $user['created_at'];
-		//$response['user']['updated_at'] = $user['updated_at'];
+		$response['user']['name'] = $user['name'];
+		//$response['user']['name'] = "Tao Hu";
+		$response['user']['location'] = $user['location'];
+		//$response['user']['location'] = "San Francisco";
 		echo json_encode($response);
-	/*}
+	}
 	else{
 		// user not found
 		// echo json with error = 1
 		$response['error'] = 1;
 		$response['error_msg'] = "Invalid email or password!";
 		echo json_encode($response);
-	}*/
+	}
 }
 else{
-	echo "{}";
+	$response['error'] = 2;
+	$response['error_msg'] = "No Email";
+	echo json_encode($response);
+	
 }
 
 

@@ -1,0 +1,125 @@
+ <!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="en" class="no-js ie6 oldie">
+<![endif]-->
+<!--[if IE 7]>
+<html lang="en" class="no-js ie7 oldie">
+<![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="no-js ie8 oldie">
+<![endif]-->
+<!-- [if gt IE 8] <!-->
+<html lang="en" class="no-js">
+<!-- <![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThrdPlace</title>
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="/js/html5shiv.js"></script>    <![endif]-->
+	<link rel="stylesheet" type="text/css" href="http://thrdplace.com/components/fancybox/source/jquery.fancybox.css"/>
+	<link rel="stylesheet" type="text/css" href="http://thrdplace.com/css/screen.css" />    
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://thrdplace.com/js/cufon-yui.js"></script>    
+	<script type="text/javascript" src="http://thrdplace.com/js/din.font.js"></script>    
+	<script type="text/javascript" src="http://thrdplace.com/js/jquery.bxSlider.js"></script>
+	<script type="text/javascript" src="/js/popup.js"></script>	
+	<script src="http://thrdplace.com/components/fancybox/source/jquery.fancybox.js"></script> 
+  </head>
+  <body class="home">
+	<div style="display:none" id="upgrade" class="upgrade din bold">
+		We're working to make thrdPlace work for you, but its just not optimized to run on your current browser...click 
+		<a href="htttp://firefox.com">here</a> or <a href="http://www.chrome.com">here</a> for a better browsing experience
+	</div>
+  
+<div id="start-a-project">
+	<span class="start-project-header">Start a Project with ThrdPlace!</span>
+  		<div class="left">
+   			Create an account:<br />
+         	<span class="teal">Sign up</span>
+         	<form action="/users/register" id="signup-form" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div>         	<div class="input text"><label for="first_name">First Name</label><input name="data[User][first_name]" id="first_name" maxlength="200" type="text"/></div><div class="input text"><label for="last_name">Last Name</label><input name="data[User][last_name]" id="last_name" maxlength="200" type="text"/></div><div class="input text required"><label for="register_email">Email</label><input name="data[User][email]" id="register_email" maxlength="200" type="text"/></div><div class="input text"><label for="UserLocation">Location</label><input name="data[User][location]" type="text" id="UserLocation"/></div><div class="input text"><label for="register_user">Username</label><input name="data[User][username]" id="register_user" maxlength="255" type="text"/></div><div class="input password required"><label for="register_password">Password</label><input name="data[User][password]" id="register_password" type="password"/></div><div class="input password"><label for="register_password2">Re-Enter Password</label><input name="data[User][password2]" id="register_password2" type="password"/></div>         	<br/>
+            <input type="hidden" name="_submit" value="Register"/>
+            <div id ="signup-submit" class="btn">
+            	Submit
+           	</div>
+         	</form>          	<div style="clear:both;"></div>
+          	<br/><br/>
+          	<div id="error-register" class="error-message"></div>
+          	<br/><br/>
+         	By clicking submit you are agreeing to the <a id="termsofuse" href="../blog/?p=142">terms of use</a> regarding the thrdPlace platform
+    	</div>
+            
+    	<div class="right">
+           		Already have an account?<br />
+        	<span class="teal">Login</span>
+        	<form action="/users/login" id="login-form" controller="users" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div>        	<span class="label">Username</span>
+        	<div class="input text"><input name="data[User][username]" id="email-input" value="" type="text"/></div><br/>
+          	<div class="input password required"><label for="login_password">Password</label><input name="data[User][password]" id="pwd-input" type="password"/></div><br/>
+               	<input type="hidden" name="_submit" value="Login"/>
+            	<input name="create" type="hidden" id="create"/>        	
+			<div id="login-btn" class="btn">Login</div>
+			<div id="search-btn" class="btn">Search</div> 
+          	</form>          	<br/><br/>
+          	<div style="clear:both;"></div>
+          	<div id="login-error" class="error-message"></div>
+                    
+  		<span class="social">OR sign in with <br />facebook or twitter</span><br />
+     	<a href="http://thrdplace.com/users/store_user_data"><img src="http://thrdplace.com/img/icon-fb-button.png" style="margin-right:16px;" alt="" /></a>
+      	<a href="http://thrdplace.comtwitter/twitter-login.php"><img src="http://thrdplace.com/img/icon-twitter-button.png" style="margin-right:16px;" alt="" /></a>
+  		</div>
+   		<div style="clear:both;"></div>
+</div>   
+  <header id="masthead">
+    <div id="create_flag" redirect=""></div>
+  <div class="wrap"><a href="/">
+
+<img src="http://thrdplace.com/img/new_images/beta-logo.jpg" alt="ThrdPlace" id="logo" />    </a>
+      <section class="utilityNav">
+<div class="divdr"></div>
+<div class="din bold discoverProject"><a href="http://thrdplace.com/map/discover">Discover a Project</a></div>
+<div class="divdr"></div>
+<div class="din bold discoverProject" style="padding-right:15px;"><a id="createproject2" href="http://thrdplace.com/projects/manage">Start a Project</a></div>
+<div class="divdr" style="padding-left:100px;"></div>
+<div id="signUp" class="signUp"><a href="#start-a-project" class="signUp din bold">Sign Up // Login</a></div><a href="https://www.facebook.com/pages/ThrdPlace/287657154590667" class="facebook social" target="_blank">Facebook</a><a href="https://twitter.com/thrdplace" class="twitter social" target="_blank">Twitter</a><a href="/blog/?feed=rss2" class="rss social" target="_blank">RSS</a>  <a href="mailto:admin@thrdplace.com?subject=Build your community at thrdplace.com" class="contact social">Email</a>
+<a href="http://thrdplace.com/blog" class="blog social">Blog</a>      </section>
+  </div>
+
+
+
+
+<!-- OPEN PROJECTS -->
+
+<div id="open-projects">
+  <span class="start-project-header">Open Projects!</span>
+None</div>
+</header>
+    <!-- END #masthead -->
+    <div id="sticky-anchor"></div>  
+    <div class="landingBanner">
+<a class="fancybox-media btn din bold" href="http://player.vimeo.com/video/39818320?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1" id="video">
+</a>
+    </div>
+    <section class="orgIcons">
+      <div class="orgAllSection">
+      <div class="orgIconContainer"><a class="iconhome" id="ProfitSeclink"><img src="http://thrdplace.com/img/new_images/forProfitIcon1.png"></a></div>
+      <div class="orgIconContainer"><a class="iconhome" id="indSeclink"><img src="http://thrdplace.com/img/new_images/indIcon.png"></a></div>
+      <div class="orgIconContainer"><a class="iconhome" id="govtSeclink"><img src="http://thrdplace.com/img/new_images/govtIcon.png"></a></div>
+      <div class="orgIconContainer"><a class="iconhome" id="nonProfitSeclink"><img src="http://thrdplace.com/img/new_images/nonprofitIcon.png"></a></div>
+      </div>
+    </section>
+    
+    <!-- END #colophon-->
+   <script type="text/javascript" src="js/scripts.js"></script>  </body>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26098022-1']);
+  _gaq.push(['_trackPageview']);
+
+    (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+              ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+
+  </script>
+</html>

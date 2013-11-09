@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script>
-  var userName = "";
-  var userLocation = "";
-  $(document).ready(function(){
-   var email = $('.email').val();
-   var pwd = $('.pwd').val(); 
-   $('#login-btn').click(function(){
-      var request = $.ajax({
-         type:'POST',
-         url: '/php/login.php',
-         data: {email:email, password:pwd}
-       });
-       request.done(function(json){
-           var response = eval("("+ json + ")");
-				userName = response.user.name;
-				userLocation = response.user.location;
-				alert(userName + " " + userLocation);
-				if(userName !== "" && userLocation !== ""){
-					$('#username').html(response.user.name);
-					$('#userlocation').html(response.user.location);
-					
-				}
-				else{
-					$('#username').html("Error");
-					$('#userlocation').html("Error");
-				}
-	   });
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	var userName = "";
+	var userLocation = "";
+	$('#login-btn').click(function(){
+		var email = $('.email').val();
+		var pwd = $('.pwd').val();
+				
+		var request = $.ajax({
+			type:"POST",
+			url: "php/login.php",
+			data: {email:email, password:pwd}
+		});
+		request.done(function(json){
+			var response = eval("("+ json + ")");
+			userName = response.user.name;
+			userLocation = response.user.location;
+			alert(userName + " " + userLocation);
+			if(userName !== "" && userLocation !== ""){
+				$('#username').html(response.user.name);
+				$('#userlocation').html(response.user.location);			
+			}
+			else{
+				$('#username').html("Error");
+				$('#userlocation').html("Error");
+			}
+		});
     });
 	
 	$('.search-btn').click(function(){
 		alert(userLocation);
 	  window.location.href = "./php/phpsolr.php?name=" + userName + "&location=" + userLocation;
 	});
-   });
+});
 
 
 
@@ -59,24 +59,6 @@
   </script>
 </head>
 <body>
-  <h1 align='center'>Facebook Graph Demo</h1><br>
-  Email: <input type='text' class='email' >
-  Password: <input class='pwd' type='text' >
-  <button id='login-btn'>Login</button>
-  <button onclick='fb_login()'>Login with facebook</button>
-  <button onclick='getProfile()'>Get facebook profile</button>
-  <div style='margin:50px;'></div>
-  <div style='margin:50px;' id='user profile'>
-     <h1>user name: <span id='username'></span></h1>
-     <h1>user location: <span id='userlocation'></span></h1>
-  </div>
-  <button class='search-btn'>Start Search</button><br>
-  <button style='margin-top:100px;' onclick='logout()'>Logout facebook</button>
-</body>
-
-
-
-
 <div id="fb-root"></div>
 <script>
   // Additional JS functions here
@@ -103,5 +85,26 @@
 
 
 </script>
+
+
+  <h1 align='center'>Facebook Graph Demo</h1><br>
+  Email: <input type='text' class='email' >
+  Password: <input class='pwd' type='text' >
+  <button id='login-btn'>Login</button>
+  <button onclick='fb_login()'>Login with facebook</button>
+  <button onclick='getProfile()'>Get facebook profile</button>
+  <div style='margin:50px;'></div>
+  <div style='margin:50px;' id='user profile'>
+     <h1>user name: <span id='username'></span></h1>
+     <h1>user location: <span id='userlocation'></span></h1>
+  </div>
+  <button class='search-btn'>Start Search</button><br>
+  <button style='margin-top:100px;' onclick='logout()'>Logout facebook</button>
+</body>
+
+
+
+
+
 
 </html>
