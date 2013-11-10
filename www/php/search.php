@@ -32,7 +32,7 @@ if($location){
 }
 
 $results = false;
-require_once( '../include/SolrPhpClient\Apache\Solr\Service.php' ); 
+require_once( '../include/SolrPhpClient/Apache/Solr/Service.php' ); 
 $solr = new Apache_Solr_Service( 'localhost', '8983', '/solr' );
   
   if ( ! $solr->ping() ) {
