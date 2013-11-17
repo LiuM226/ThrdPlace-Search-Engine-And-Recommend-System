@@ -33,6 +33,7 @@ if($location){
 }
 
 $results = false;
+<<<<<<< HEAD
 require_once( '..\include\SolrPhpClient\Apache\Solr\Service.php' );   
 if ($query){
 	try{
@@ -64,6 +65,46 @@ if ($query){
 		die("<html><head><title>SEARCH EXCEPTION</title><body><pre>{$e->__toString()}</pre></body></html>");
 	}
 }	
+=======
+require_once( '../include/SolrPhpClient/Apache/Solr/Service.php' ); 
+$solr = new Apache_Solr_Service( 'localhost', '8983', '/solr' );
+  
+  if ( ! $solr->ping() ) {
+    echo 'Solr service not responding.';
+    exit;
+  }
+
+  
+if ($query)
+{
+    
+  //
+  //
+  // Try to connect to the named server, port, and url
+  //
+  
+  
+  try
+  {
+	$query = $query;
+	$params = array(
+		'sort' => $sort . " " . $order
+		
+	);
+	
+	
+    $results = $solr->search($query, 0, $limit, $params);
+  }
+  catch (Exception $e)
+  {
+    // in production you'd probably log or email this error to an admin
+        // and then show a special message to the user but for this example
+        // we're going to show the full exception
+        die("<html><head><title>SEARCH EXCEPTION</title><body><pre>{$e->__toString()}</pre></body></html>");
+  }
+  
+  }
+>>>>>>> 57fa20589a81161eab5dc611b5d794d491228c90
  
  
 ?>
