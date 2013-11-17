@@ -23,8 +23,8 @@ class DB_Functions{
 	 * Get user by email and password
 	 */
 	public function getUserByEmailAndPassword($email, $password){
-		$select = mysql_select_db("test", $this->db_link) or die("Could not select example");
-		$result = mysql_query("SELECT * FROM users WHERE email = '$email'");
+		$select = mysql_select_db("thrdplace_test", $this->db_link) or die("Could not select example");
+		$result = mysql_query("SELECT * FROM creator WHERE username = '$email'");
 		// check for result
 		$no_of_rows = mysql_num_rows($result);
 		if ($no_of_rows > 0){
@@ -40,7 +40,7 @@ class DB_Functions{
 	 */
 	 
 	public function isUserExist($email){
-		$result = mysqli_query($this->db_link, "SELECT email from users WHERE email = '$email'") or die(mysqli_error($this->db_link));
+		$result = mysqli_query($this->db_link, "SELECT * from creator WHERE username = '$email'") or die(mysqli_error($this->db_link));
 		$no_of_rows = mysqli_num_rows($result);
 		if($no_of_rows > 0){
 			// user existing

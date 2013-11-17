@@ -19,9 +19,9 @@ if (isset($_POST['email'])){
 		// user found
 		// echo json with success = 1
 		$response['success'] = 1;
-		$response['user']['name'] = $user['name'];
+		$response['user']['name'] = $user['username'];
 		//$response['user']['name'] = "Tao Hu";
-		$response['user']['location'] = $user['location'];
+		$response['user']['location'] = $user['creator_city'];
 		//$response['user']['location'] = "San Francisco";
 		echo json_encode($response);
 	}
