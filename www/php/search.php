@@ -34,6 +34,7 @@ if($location){
 
 $results = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 require_once( '..\include\SolrPhpClient\Apache\Solr\Service.php' );   
 if ($query){
 	try{
@@ -66,6 +67,8 @@ if ($query){
 	}
 }	
 =======
+=======
+>>>>>>> 57fa20589a81161eab5dc611b5d794d491228c90
 require_once( '../include/SolrPhpClient/Apache/Solr/Service.php' ); 
 $solr = new Apache_Solr_Service( 'localhost', '8983', '/solr' );
   
