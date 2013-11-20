@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="src" path="include"/>
+	<buildpathentry kind="src" path="influence"/>
+	<buildpathentry kind="src" path="php"/>
+	<buildpathentry kind="src" path="solr"/>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+</buildpath>

@@ -2,24 +2,35 @@
 	
 class Contributor{
 private $url;
-private $influenceWeight;
 private $commentsNumber;
 private $contributedProjNumber;
+private $tweets;
+private $fblikes;
+private $socialInfluenceWeight;
 
 function __construct(){
 $num = func_num_args();
 $args = func_get_args();
-switch ($num){   
+switch ($num){
 case 0:
 case 1:
 case 2:
-break;   
+break;
 case 3:
-case 4:     
 $this->url=$args[0];
-$this->influenceWeight=$args[1];
-$this->commentsNumber=$args[2];
-$this->contributedProjNumber=$args[3];
+$this->commentsNumber=$args[1];
+$this->contributedProjNumber=$args[2];
+break;
+case 4:
+case 5:
+break;
+case 6:
+$this->url=$args[0];
+$this->commentsNumber=$args[1];
+$this->contributedProjNumber=$args[2];
+$this->tweets=$args[3];
+$this->fblikes=$args[4];
+$this->socialInfluenceWeight=$args[5];
 break;
 }
 }
@@ -48,12 +59,28 @@ function getUrl(){
 	return $this->url;
 }
 
-function setInfluenceWeight($influenceWeight){
-$this->influenceWeight=$influenceWeight;
+function getTweets(){
+	return $this->tweets;
 }
 
-function getInfluenceWeight(){
-return $this->influenceWeight;
+function setTweets($tweets){
+	$this->tweets=$tweets;
+}
+
+function getfblikes(){
+	return $this->fblikes;
+}
+
+function setfblikes($fblikes){
+	$this->fblikes=$fblikes;
+}
+
+function getSocialInfluenceWeight(){
+	return $this->socialInfluenceWeight;
+}
+
+function setSocialInfluenceWeight($socialInfluenceWeight){
+	$this->socialInfluenceWeight=$socialInfluenceWeight;
 }
 
 }
