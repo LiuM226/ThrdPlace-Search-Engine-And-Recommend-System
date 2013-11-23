@@ -18,6 +18,7 @@ if(isset($_GET['name'])){
 }
 $name = null;
 $location = null;
+$projectName = null;
 if (!isset($_SESSION['location'])) {
     $location = isset($_GET['location']) ? $_GET['location'] : "No location";
 	$name = isset($_GET['name']) ? $_GET['name'] : "No name";
@@ -33,8 +34,7 @@ if($location){
 }
 
 $results = false;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 require_once( '..\include\SolrPhpClient\Apache\Solr\Service.php' );   
 if ($query){
 	try{
@@ -66,37 +66,24 @@ if ($query){
 		die("<html><head><title>SEARCH EXCEPTION</title><body><pre>{$e->__toString()}</pre></body></html>");
 	}
 }	
-=======
-=======
->>>>>>> 57fa20589a81161eab5dc611b5d794d491228c90
+
 require_once( '../include/SolrPhpClient/Apache/Solr/Service.php' ); 
-$solr = new Apache_Solr_Service( 'localhost', '8983', '/solr' );
-  
-  if ( ! $solr->ping() ) {
+$solr = new Apache_Solr_Service( 'localhost', '8983', '/solr/collection1' ); 
+if ( ! $solr->ping() ) {
     echo 'Solr service not responding.';
     exit;
-  }
-
-  
-if ($query)
+}
+if (true)
 {
-    
-  //
-  //
-  // Try to connect to the named server, port, and url
-  //
-  
-  
   try
   {
-	$query = $query;
 	$params = array(
-		'sort' => $sort . " " . $order
-		
-	);
-	
-	
-    $results = $solr->search($query, 0, $limit, $params);
+		'fq' => $name
+	);	
+    $ProjectN = $solr->search("*:*", 0, $limit, $params);
+	foreach($ProjectN->response->docs as $doc){
+		$projectName = $doc->project_title;
+	}
   }
   catch (Exception $e)
   {
@@ -107,7 +94,7 @@ if ($query)
   }
   
   }
->>>>>>> 57fa20589a81161eab5dc611b5d794d491228c90
+
  
  
 ?>
@@ -115,7 +102,8 @@ if ($query)
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Search</title>
-<link href="../css/search.css" rel="stylesheet" type="text/css" /><!--[if lte IE 7]>
+<link href="../css/search.css" rel="stylesheet" type="text/css" />
+<link href="../css/list.css" rel="stylesheet" type="text/css" /><!--[if lte IE 7]>
 
 <style>
 .content { margin-right: -1px; } /* this 1px negative margin can be placed on any of the columns in this layout with the same corrective effect. */
@@ -126,7 +114,7 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 
 <body>
 <div class="status-bar">
-	<P>Name: <?php echo htmlspecialchars($name, ENT_QUOTES, 'utf-8') . "    ";?>Location: <?php echo htmlspecialchars($filter, ENT_QUOTES, 'utf-8');?></p>
+	<P>Name: <?php echo htmlspecialchars($name, ENT_QUOTES, 'utf-8') . "    ";?>Location: <?php echo htmlspecialchars($filter, ENT_QUOTES, 'utf-8') . "    ";?>Project: <?php echo htmlspecialchars($projectName, ENT_QUOTES, 'utf-8');?></p>
 </div>
 <div class="container">
   <div class="header">
@@ -197,9 +185,10 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 				else{
 ?>
 					<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Project&s=money_needed&order=DESC&rows=20">Funds</a></li>
-					<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Project&s=project_title&order=DESC&rows=20">Title</a></li>
+					<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Project&s=supplies_needed&order=DESC&rows=20">Supplies</a></li>
 					<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Project&s=volunteer_needed&order=DESC&rows=20">Volunteers</a></li>
-					<li><a>Influence</a></li>
+					<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Project&s=influence&order=DESC&rows=20">Influence</a></li>
+					
 <?php
 				}
 			}
@@ -304,6 +293,7 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 							<span class="item11" ><?php echo "Funds(needed):   " . $doc->money_needed;?></span>
 							<span class="item11" ><?php echo "Volunteers(needed):   " . $doc->volunteer_needed;?></span>
 							<span class="item11" ><?php echo "Supply(needed):   " . $doc->supplies_needed;?></span>
+							<span class="item11" ><?php echo "Influence:   " . number_format($doc->influence,3);;?></span>
 						</div>
 						<div class="detail">
 							<?php echo "Detail:   " . $doc->project_description;?>	
@@ -321,47 +311,32 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 	
 	</div>
 	</div>
-	<div class="recommendation">
+	<div class="recommendation fancyList">
 	<H6 class="section-title">RECOMMADATION</H3>	
-	<div class="recommended_project">
-		<img src="../img/PR.jpg" width="100%" height="100%"></img>
-	</div>
-		<P align="center">PROJECT WITH HIGHEST MONEY(RAISED)</P>
+	<H4 align="center">Contributors interested in your project</H4>
 <?php
-	$solr = new Apache_Solr_Service( 'localhost', '8983', '/solr/collection1' );
+	$solr = new Apache_Solr_Service( 'localhost', '8983', '/solr/contributor1' );
 	$params = array(
-		'fq' => $filter,
-		'sort' => 'money_raised desc',
-		'fl' => 'project_title username money_raised money_needed project_address'	
+		'fq' => $projectName,
+		'sort' => 'contribute_money desc',
+		'fl' => 'contributor_phone contributor_first_name contributor_last_name contribute_money contributor_email'	
 	);
-	$results = $solr->search("*:*", 0, 1, $params);	
+	$results = $solr->search("*:*", 0, 5, $params);	
+?>
+	<ol class="circle-list">
+<?php
 	foreach($results->response->docs as $doc){
 ?>
-		<TABLE align = "center" style = "border: 1px solid black; text-align: left; margin: 5px">	
-			<TR>
-				<TH><H6><?php echo "PROJECT:";?></H6></TH>
-				<TD><H6><?php echo $doc->project_title;?></H6></TD>
-			</TR>
-			<TR>
-				<TH><H6><?php echo "RAISED:";?></H6></TH>
-				<TD><H6><?php echo $doc->money_raised;?></H6></TD>
-			</TR>
-			<TR>
-				<TH><H6><?php echo "NEEDED:";?></H6>
-				<TD><H6><?php echo $doc->money_needed;?></H6></TD>
-			</TR>
-			<TR>
-				<TH><H6><?php echo "OWNER:";?></H6></TH>
-				<TD><H6><?php echo $doc->username;?></H6></TD>
-			</TR>
-			<TR>
-				<TH><H6><?php echo "ADDRESS:";?></H6></TH>
-				<TD><H6><?php echo $doc->project_address;?></H6></TD>
-			</TR>
-		</TABLE>
+		<li>
+		    <h3><?php echo $doc->contributor_first_name . " " . $doc->contributor_last_name?></h3>
+		    <p>Email:<?php echo $doc->contributor_email;?></p>
+			<p>Phone:<?php echo $doc->contributor_phone;?></p>
+			<p>Contribution:$<?php echo $doc->contribute_money;?></p>
+		</li>
 <?php
 	}
 ?>
+	</ol>
 	</div>
     <!-- end .content --></div>
 	<div class="footer">
