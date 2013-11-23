@@ -35,7 +35,7 @@ if($location){
 
 $results = false;
 
-require_once( '..\include\SolrPhpClient\Apache\Solr\Service.php' );   
+require_once( '../include/SolrPhpClient/Apache/Solr/Service.php' );   
 if ($query){
 	try{
 		if($searchType == "Contributor"){
