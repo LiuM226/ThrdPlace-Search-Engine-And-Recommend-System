@@ -2,10 +2,15 @@
 header('Content-Type: text/html; charset=utf-8');
 $limit = 20;
 $query = isset($_GET['q']) ? $_GET['q'] : false;
+if($query === ""){
+	$query = "*:*";
+}
 $sort = isset($_GET['s']) ? $_GET['s'] : false;
 $order = isset($_GET['order']) ? $_GET['order'] : false;
 $searchType = isset($_GET['searchType']) ? $_GET['searchType'] : false;
 $filter = "New";
+$stateFilter = isset($_COOKIE['state'])? ($_COOKIE['state']):"";
+$cityFilter = isset($_COOKIE['city'])? ($_COOKIE['city']):"";
 session_start();
 // some code here
 if(isset($_GET['name'])){
@@ -40,27 +45,26 @@ if ($query){
 	try{
 		if($searchType == "Contributor"){
 			$solr = new Apache_Solr_Service( 'localhost', '8983', '/solr/contributor1' );
-			$params = array(
-				'sort' => $sort . " " . $order
-			);
 		}
 		else{ 
 			if($searchType == "Creator"){
 				$solr = new Apache_Solr_Service( 'localhost', '8983', '/solr/ProjectCreator' );
-				$params = array(
-					'sort' => $sort . " " . $order
-				);
 			}
 			else{
-				$solr = new Apache_Solr_Service( 'localhost', '8983', '/solr/collection1' );
-				$params = array(
-					'sort' => $sort . " " . $order
-				);
+				$solr = new Apache_Solr_Service( 'localhost', '8983', '/solr/collection1' );	
 			}
+			
 		}
 		if ( !$solr->ping()) {
 			echo 'Solr service not responding.';
-		}		
+		}
+		$params = array(
+					'sort' => $sort . " " . $order,
+					'fq' =>array(
+						$stateFilter,
+						$cityFilter
+					)
+				);		
 		$results = $solr->search($query, 0, $limit, $params);
 	}catch (Exception $e){
 		die("<html><head><title>SEARCH EXCEPTION</title><body><pre>{$e->__toString()}</pre></body></html>");
@@ -102,7 +106,36 @@ if (true)
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Search</title>
-<link href="../css/search.css" rel="stylesheet" type="text/css" /><!--[if lte IE 7]>
+<link href="../css/search.css" rel="stylesheet" type="text/css" />
+<link href="../css/list.css" rel="stylesheet" type="text/css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="../js/jquery.chained.min.js"></script>
+<script>
+  $( document ).ready(function() {
+	// Handler for .ready() called.
+	$("#series").chained("#mark");
+	});
+	
+	function setCookie(c_name,value,exdays){
+		var exdate=new Date();
+		exdate.setDate(exdate.getDate() + exdays);
+		var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+		document.cookie=c_name + "=" + c_value;
+	}
+	
+	function setState(){
+		var s = document.getElementById("mark").value;
+		setCookie("state",s,365);
+	}
+	
+	function setCity(){
+		var c = document.getElementById("series").value;
+		setCookie("city",c,365);
+	}
+  </script>
+
+<!--[if lte IE 7]>
 
 <style>
 .content { margin-right: -1px; } /* this 1px negative margin can be placed on any of the columns in this layout with the same corrective effect. */
@@ -127,7 +160,7 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 			<LABEL for = "q"></LABEL>
 			<INPUT id = "search-text" id = "q" name = "q" type = "text" placeholder="Which project do you want to search for?" value="<?php echo htmlspecialchars($query, ENT_QUOTES, 'utf-8');?>"/>
 			<INPUT id = "search-button" type = "submit" value="search"/>
-			<select id="search-type" name = "searchType">
+			<select id="search-type" class="search-type" name = "searchType">
                     <option <?php if((isset($searchType) && $searchType === "Project")) echo "selected = \"selected\""?>>Project</option>
                     <option <?php if((isset($searchType) && $searchType === "Contributor")) echo "selected = \"selected\""?>>Contributor</option>
                     <option <?php if((isset($searchType) && $searchType === "Creator")) echo "selected = \"selected\""?>>Creator</option>
@@ -140,61 +173,122 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 	
 	<!-- end .header --></div>
 	<div class="sidebar1">
-		<H4 class="section-title">TYPE</H4>
+		<H4 class="section-title">SORT</H4>
 		<div class="type-tag">
 			<ul class="nav">
-			<li><a href="#">General</a></li>
-			<li><a href="#">Government</a></li>
-			<li><a href="#">Individual</a></li>
-			<li><a href="#">Non-profit</a></li>
-			<li><a href="#">Profit</a></li>
-			</ul>
-		</div>
-		<H4 class="section-title">CAPITAL</H4>
-		<div class="type-tag">
-			<ul class="nav">
-			<li><a href="#">Funds</a></li>
-			<li><a href="#">Volunteer</a></li>
-			<li><a href="#">Nearest</a></li>
-			</ul>
-		</div>
-    <p>&nbsp;</p>
-    <!-- end .sidebar1 --></div>
-  <div class="content">
-    <div class="results-div">
-	<div class="results-tool">
-		<div class="results-sort">
-		<ul>
 <?php
 			if((isset($searchType) && $searchType === "Creator")){
 ?>				
-				<li><a href="/php/contributorSearch.php?q=<?php echo $query?>&searchType=Creator&s=username&order=DESC&rows=20">Username</a></li>
 				<li><a>Influence</a></li>
+				<li><a href="/php/contributorSearch.php?q=<?php echo $query?>&searchType=Creator&s=username&order=DESC&rows=20">Username</a></li>
+				
 <?php			
 			}
 			else{
 				if((isset($searchType) && $searchType === "Contributor")){
 ?>
+					<li><a>Influence</a></li>
 					<li><a href="/php/contributorSearch.php?q=<?php echo $query?>&searchType=Contributor&s=contribute_money&order=DESC&rows=20">Money</a></li>
 					<li><a href="/php/contributorSearch.php?q=<?php echo $query?>&searchType=Contributor&s=contribute_volunteer_hours&order=DESC&rows=20">Hours</a></li>
 					<li><a href="/php/contributorSearch.php?q=<?php echo $query?>&searchType=Contributor&s=contribute_supplies&order=DESC&rows=20">Supplies</a></li>
-					<li><a>Influence</a></li>
+					
 <?php
 				}
 				else{
 ?>
+					<li><a href="/php/contributorSearch.php?q=<?php echo $query?>&searchType=Project&s=influence&order=DESC&rows=20">Influence</a></li>
 					<li><a href="/php/contributorSearch.php?q=<?php echo $query?>&searchType=Project&s=money_needed&order=DESC&rows=20">Funds</a></li>
 					<li><a href="/php/contributorSearch.php?q=<?php echo $query?>&searchType=Project&s=supplies_needed&order=DESC&rows=20">Supplies</a></li>
 					<li><a href="/php/contributorSearch.php?q=<?php echo $query?>&searchType=Project&s=volunteer_needed&order=DESC&rows=20">Volunteers</a></li>
-					<li><a href="/php/contributorSearch.php?q=<?php echo $query?>&searchType=Project&s=influence&order=DESC&rows=20">Influence</a></li>
+					
 					
 <?php
 				}
 			}
 ?>
-		</ul>
+			</ul>
 		</div>
-	</div>
+		<H4 class="section-title">LOCATION</H4>
+		<div class="type-tag">
+		
+			
+			<form>
+			<p>State</p>
+			<select id="mark" name="mark" style="width:200px;" class="search-type" onchange="setState()">		
+<?php
+			//pseudo
+			$arr = array("", "Alabama", "California", "NewYork");
+			foreach($arr as $value) {
+				echo '<option value="' . $value . '" ';
+				if($stateFilter === $value) {
+					echo "selected = \"selected\"";
+				}
+				if($value===""){
+					echo '>--</option>';
+				}
+				else{
+					echo '>' . $value . "</option>";
+				}
+			}
+?>				
+			</select>
+			<p>&nbsp;</p>
+			
+			<p>City</p>
+			<select id="series" name="series" style="width:200px;" class="search-type" onchange="setCity()">
+<?php
+			//pseudo
+			$arr = array("", "Adamsville", "Cottonwood", "Eclectic", "Gurley", "Hollins", "Mobile", "NewHope", "Sheffield", "SpanishFort");
+			foreach($arr as $value) {
+				echo '<option value="' . $value . '" ';
+				if($cityFilter === $value) {
+					echo "selected = \"selected\"";
+				}
+				if($value===""){
+					echo '>--</option>';
+				}
+				else{
+					echo ' class="Alabama">' . $value . "</option>";
+				}
+			}
+			
+			$arr = array("Austerlitz", "Brooklyn", "Cassadaga", "EastElmhurst", "FlyCreek", "Haverstraw", "Inwood", "LakeLuzerne", "Thomson");
+			foreach($arr as $value) {
+				echo '<option value="' . $value . '" ';
+				if($cityFilter === $value) {
+					echo "selected = \"selected\"";
+				}
+				if($value===""){
+					echo '>--</option>';
+				}
+				else{
+					echo ' class="NewYork">' . $value . "</option>";
+				}
+			}
+			
+			$arr = array("Aguanga", "Anaheim", "Arbuckle", "Arcadia", "Arleta", "Baker", "Ballico", "BirdsLanding", "BodegaBay", "LosMolinos","LosAngeles");
+			foreach($arr as $value) {
+				echo '<option value="' . $value . '" ';
+				if($cityFilter === $value) {
+					echo "selected = \"selected\"";
+				}
+				if($value===""){
+					echo '>--</option>';
+				}
+				else{
+					echo ' class="California">' . $value . "</option>";
+				}
+			}
+?>	
+			</select>
+			<p>&nbsp;</p>
+			</form>
+		</div>
+    <p>&nbsp;</p>
+    <!-- end .sidebar1 --></div>
+  <div class="content">
+    <div class="results-div">
+	
 	<div class="results">
 
 <?php

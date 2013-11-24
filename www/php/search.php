@@ -2,12 +2,15 @@
 header('Content-Type: text/html; charset=utf-8');
 $limit = 20;
 $query = isset($_GET['q']) ? $_GET['q'] : false;
+if($query === ""){
+	$query = "*:*";
+}
 $sort = isset($_GET['s']) ? $_GET['s'] : false;
 $order = isset($_GET['order']) ? $_GET['order'] : false;
 $searchType = isset($_GET['searchType']) ? $_GET['searchType'] : false;
 $filter = "New";
-$stateFilter = null;
-$cityFilter = null;
+$stateFilter = isset($_COOKIE['state'])? ($_COOKIE['state']):"";
+$cityFilter = isset($_COOKIE['city'])? ($_COOKIE['city']):"";
 session_start();
 // some code here
 if(isset($_GET['name'])){
@@ -42,27 +45,26 @@ if ($query){
 	try{
 		if($searchType == "Contributor"){
 			$solr = new Apache_Solr_Service( 'localhost', '8983', '/solr/contributor1' );
-			$params = array(
-				'sort' => $sort . " " . $order
-			);
 		}
 		else{ 
 			if($searchType == "Creator"){
 				$solr = new Apache_Solr_Service( 'localhost', '8983', '/solr/ProjectCreator' );
-				$params = array(
-					'sort' => $sort . " " . $order
-				);
 			}
 			else{
-				$solr = new Apache_Solr_Service( 'localhost', '8983', '/solr/collection1' );
-				$params = array(
-					'sort' => $sort . " " . $order
-				);
+				$solr = new Apache_Solr_Service( 'localhost', '8983', '/solr/collection1' );	
 			}
+			
 		}
 		if ( !$solr->ping()) {
 			echo 'Solr service not responding.';
-		}		
+		}
+		$params = array(
+					'sort' => $sort . " " . $order,
+					'fq' =>array(
+						$stateFilter,
+						$cityFilter
+					)
+				);
 		$results = $solr->search($query, 0, $limit, $params);
 	}catch (Exception $e){
 		die("<html><head><title>SEARCH EXCEPTION</title><body><pre>{$e->__toString()}</pre></body></html>");
@@ -114,7 +116,23 @@ if (true)
 	// Handler for .ready() called.
 	$("#series").chained("#mark");
 	});
-
+	
+	function setCookie(c_name,value,exdays){
+		var exdate=new Date();
+		exdate.setDate(exdate.getDate() + exdays);
+		var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+		document.cookie=c_name + "=" + c_value;
+	}
+	
+	function setState(){
+		var s = document.getElementById("mark").value;
+		setCookie("state",s,365);
+	}
+	
+	function setCity(){
+		var c = document.getElementById("series").value;
+		setCookie("city",c,365);
+	}
   </script>
 <!--[if lte IE 7]>
 
@@ -191,49 +209,76 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 		</div>
 		<H4 class="section-title">LOCATION</H4>
 		<div class="type-tag">
+		
+			
 			<form>
 			<p>State</p>
-			<select id="mark" name="mark" style="width:200px;" class="search-type">
-			<option value="">--</option>
-			<option value="Alabama">Alabama</option>
-			<option value="California">California</option>
-			<option value="NewYork">NewYork</option>
-			
+			<select id="mark" name="mark" style="width:200px;" class="search-type" onchange="setState()">		
+<?php
+			//pseudo
+			$arr = array("", "Alabama", "California", "NewYork");
+			foreach($arr as $value) {
+				echo '<option value="' . $value . '" ';
+				if($stateFilter === $value) {
+					echo "selected = \"selected\"";
+				}
+				if($value===""){
+					echo '>--</option>';
+				}
+				else{
+					echo '>' . $value . "</option>";
+				}
+			}
+?>				
 			</select>
 			<p>&nbsp;</p>
-			<p>City</p>
-			<select id="series" name="series" style="width:200px;" class="search-type">
-			<option value="">--</option>
-			<option value="Adamsville" class="Alabama">Adamsville</option>
-			<option value="Cottonwood" class="Alabama">Cottonwood</option>
-			<option value="sEclectic" class="Alabama">Eclectic</option>
-			<option value="Gurley" class="Alabama">Gurley</option>
-			<option value="Hollins" class="Alabama">Hollins</option>
-			<option value="Mobile" class="Alabama">Mobile</option>
-			<option value="NewHope" class="Alabama">NewHope</option>
-			<option value="Sheffield" class="Alabama">Sheffield</option>
-			<option value="SpanishFort" class="Alabama">SpanishFort</option>
 			
-			<option value="Austerlitz" class="NewYork">Austerlitz</option>		
-			<option value="Brooklyn" class="NewYork">Brooklyn</option>	
-			<option value="Cassadaga" class="NewYork">Cassadaga</option>
-			<option value="EastElmhurst" class="NewYork">EastElmhurst</option>
-			<option value="FlyCreek" class="NewYork">FlyCreek</option>
-			<option value="Haverstraw" class="NewYork">Haverstraw</option>
-			<option value="Inwood" class="NewYork">Inwood</option>
-			<option value="LakeLuzerne" class="NewYork">LakeLuzerne</option>
-			<option value="Thomson" class="NewYork">Thomson</option>
-		
-			<option value="Avery" class="California">Avery</option>
-			<option value="Anaheim" class="California">Anaheim</option>
-			<option value="Arbuckle" class="California">Arbuckle</option>
-			<option value="Arcadia" class="California">Arcadia</option>
-			<option value="Arleta" class="California">Arleta</option>
-			<option value="Baker" class="California">Baker</option>
-			<option value="Ballico" class="California">Ballico</option>
-			<option value="BirdsLanding" class="California">BirdsLanding</option>
-			<option value="BodegaBay" class="California">BodegaBay</option>
-			<option value="LosAngeles" class="California">LosAngeles</option>
+			<p>City</p>
+			<select id="series" name="series" style="width:200px;" class="search-type" onchange="setCity()">
+<?php
+			//pseudo
+			$arr = array("", "Adamsville", "Cottonwood", "Eclectic", "Gurley", "Hollins", "Mobile", "NewHope", "Sheffield", "SpanishFort");
+			foreach($arr as $value) {
+				echo '<option value="' . $value . '" ';
+				if($cityFilter === $value) {
+					echo "selected = \"selected\"";
+				}
+				if($value===""){
+					echo '>--</option>';
+				}
+				else{
+					echo ' class="Alabama">' . $value . "</option>";
+				}
+			}
+			
+			$arr = array("Austerlitz", "Brooklyn", "Cassadaga", "EastElmhurst", "FlyCreek", "Haverstraw", "Inwood", "LakeLuzerne", "Thomson");
+			foreach($arr as $value) {
+				echo '<option value="' . $value . '" ';
+				if($cityFilter === $value) {
+					echo "selected = \"selected\"";
+				}
+				if($value===""){
+					echo '>--</option>';
+				}
+				else{
+					echo ' class="NewYork">' . $value . "</option>";
+				}
+			}
+			
+			$arr = array("Aguanga", "Anaheim", "Arbuckle", "Arcadia", "Arleta", "Baker", "Ballico", "BirdsLanding", "BodegaBay", "LosMolinos","LosAngeles");
+			foreach($arr as $value) {
+				echo '<option value="' . $value . '" ';
+				if($cityFilter === $value) {
+					echo "selected = \"selected\"";
+				}
+				if($value===""){
+					echo '>--</option>';
+				}
+				else{
+					echo ' class="California">' . $value . "</option>";
+				}
+			}
+?>	
 			</select>
 			<p>&nbsp;</p>
 			</form>
