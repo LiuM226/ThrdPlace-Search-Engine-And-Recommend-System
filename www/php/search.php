@@ -423,7 +423,7 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 		    <a href="/contributors/<?php echo $doc->contributor_first_name . ".html";?>"><h3><?php echo $doc->contributor_first_name . " " . $doc->contributor_last_name?></h3></a>
 		    <p>Email:<?php echo $doc->contributor_email;?></p>
 			<p>Phone:<?php echo $doc->contributor_phone;?></p>
-			<p>Contribution:$<?php echo $doc->contribute_money;?></p>
+			<p>Influence:$<?php echo $doc->contribute_money;?></p>
 		</li>
 <?php
 	}
