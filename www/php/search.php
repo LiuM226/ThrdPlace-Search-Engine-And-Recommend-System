@@ -419,6 +419,7 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 		    <p>Email:<?php echo $doc->contributor_email;?></p>
 			<p>Phone:<?php echo $doc->contributor_phone;?></p>
 			<p>Influence:<?php echo $doc->contribute_money;?></p>
+
 		</li>
 <?php
 	}
