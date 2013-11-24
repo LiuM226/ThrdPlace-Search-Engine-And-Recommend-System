@@ -425,11 +425,11 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 				<TD><H6><?php echo $doc->project_title;?></H6></TD>
 			</TR>
 			<TR>
-				<TH><H6><?php echo "RAISED:";?></H6></TH>
+				<TH><H6><?php echo "CAPITAL RAISED:";?></H6></TH>
 				<TD><H6><?php echo $doc->money_raised;?></H6></TD>
 			</TR>
 			<TR>
-				<TH><H6><?php echo "NEEDED:";?></H6>
+				<TH><H6><?php echo "CAPITAL NEEDED:";?></H6>
 				<TD><H6><?php echo $doc->money_needed;?></H6></TD>
 			</TR>
 			<TR>
@@ -441,7 +441,7 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 				<TD><H6><?php echo $doc->project_address;?></H6></TD>
 			</TR>
 			<TR>
-				<TH><H6><?php echo "Influence:";?></H6></TH>
+				<TH><H6><?php echo "INFLUENCE:";?></H6></TH>
 				<TD><H6><?php echo number_format($doc->influence,3)?></H6></TD>
 			</TR>
 		</TABLE>
