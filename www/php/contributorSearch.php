@@ -35,7 +35,7 @@ if($location){
 
 $results = false;
 
-require_once( '..\include\SolrPhpClient\Apache\Solr\Service.php' );   
+require_once( '../include/SolrPhpClient/Apache/Solr/Service.php' );   
 if ($query){
 	try{
 		if($searchType == "Contributor"){
@@ -313,7 +313,7 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 	<div class="recommendation">
 	<H6 class="section-title">RECOMMADATION</H3>	
 	<div class="recommended_project">
-		<img src="../img/PR.jpg" width="100%" height="100%"></img>
+		<a href="http://trojansite.com/influence/project1.html"><img src="../img/PR.jpg" width="100%" height="100%"></img></a>
 	</div>
 		<P align="center">Most Influencial Project</P>
 <?php
