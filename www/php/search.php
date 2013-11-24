@@ -6,6 +6,8 @@ $sort = isset($_GET['s']) ? $_GET['s'] : false;
 $order = isset($_GET['order']) ? $_GET['order'] : false;
 $searchType = isset($_GET['searchType']) ? $_GET['searchType'] : false;
 $filter = "New";
+$stateFilter = null;
+$cityFilter = null;
 session_start();
 // some code here
 if(isset($_GET['name'])){
@@ -103,7 +105,18 @@ if (true)
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Search</title>
 <link href="../css/search.css" rel="stylesheet" type="text/css" />
-<link href="../css/list.css" rel="stylesheet" type="text/css" /><!--[if lte IE 7]>
+<link href="../css/list.css" rel="stylesheet" type="text/css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="../js/jquery.chained.min.js"></script>
+<script>
+  $( document ).ready(function() {
+	// Handler for .ready() called.
+	$("#series").chained("#mark");
+	});
+
+  </script>
+<!--[if lte IE 7]>
 
 <style>
 .content { margin-right: -1px; } /* this 1px negative margin can be placed on any of the columns in this layout with the same corrective effect. */
@@ -128,7 +141,7 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 			<LABEL for = "q"></LABEL>
 			<INPUT id = "search-text" id = "q" name = "q" type = "text" placeholder="Which project do you want to search for?" value="<?php echo htmlspecialchars($query, ENT_QUOTES, 'utf-8');?>"/>
 			<INPUT id = "search-button" type = "submit" value="search"/>
-			<select id="search-type" name = "searchType">
+			<select id="search-type" class="search-type" name = "searchType">
                     <option <?php if((isset($searchType) && $searchType === "Project")) echo "selected = \"selected\""?>>Project</option>
                     <option <?php if((isset($searchType) && $searchType === "Contributor")) echo "selected = \"selected\""?>>Contributor</option>
                     <option <?php if((isset($searchType) && $searchType === "Creator")) echo "selected = \"selected\""?>>Creator</option>
@@ -141,61 +154,95 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 	
 	<!-- end .header --></div>
 	<div class="sidebar1">
-		<H4 class="section-title">TYPE</H4>
+		<H4 class="section-title">SORT</H4>
 		<div class="type-tag">
 			<ul class="nav">
-			<li><a href="#">General</a></li>
-			<li><a href="#">Government</a></li>
-			<li><a href="#">Individual</a></li>
-			<li><a href="#">Non-profit</a></li>
-			<li><a href="#">Profit</a></li>
-			</ul>
-		</div>
-		<H4 class="section-title">CAPITAL</H4>
-		<div class="type-tag">
-			<ul class="nav">
-			<li><a href="#">Funds</a></li>
-			<li><a href="#">Volunteer</a></li>
-			<li><a href="#">Nearest</a></li>
-			</ul>
-		</div>
-    <p>&nbsp;</p>
-    <!-- end .sidebar1 --></div>
-  <div class="content">
-    <div class="results-div">
-	<div class="results-tool">
-		<div class="results-sort">
-		<ul>
 <?php
 			if((isset($searchType) && $searchType === "Creator")){
 ?>				
-				<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Creator&s=username&order=DESC&rows=20">Username</a></li>
 				<li><a>Influence</a></li>
+				<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Creator&s=username&order=DESC&rows=20">Username</a></li>
+				
 <?php			
 			}
 			else{
 				if((isset($searchType) && $searchType === "Contributor")){
 ?>
+					<li><a>Influence</a></li>
 					<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Contributor&s=contribute_money&order=DESC&rows=20">Money</a></li>
 					<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Contributor&s=contribute_volunteer_hours&order=DESC&rows=20">Hours</a></li>
 					<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Contributor&s=contribute_supplies&order=DESC&rows=20">Supplies</a></li>
-					<li><a>Influence</a></li>
+					
 <?php
 				}
 				else{
 ?>
+					<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Project&s=influence&order=DESC&rows=20">Influence</a></li>
 					<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Project&s=money_needed&order=DESC&rows=20">Funds</a></li>
 					<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Project&s=supplies_needed&order=DESC&rows=20">Supplies</a></li>
 					<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Project&s=volunteer_needed&order=DESC&rows=20">Volunteers</a></li>
-					<li><a href="/php/search.php?q=<?php echo $query?>&searchType=Project&s=influence&order=DESC&rows=20">Influence</a></li>
+					
 					
 <?php
 				}
 			}
 ?>
-		</ul>
+			</ul>
 		</div>
-	</div>
+		<H4 class="section-title">LOCATION</H4>
+		<div class="type-tag">
+			<form>
+			<p>State</p>
+			<select id="mark" name="mark" style="width:200px;" class="search-type">
+			<option value="">--</option>
+			<option value="Alabama">Alabama</option>
+			<option value="California">California</option>
+			<option value="NewYork">NewYork</option>
+			
+			</select>
+			<p>&nbsp;</p>
+			<p>City</p>
+			<select id="series" name="series" style="width:200px;" class="search-type">
+			<option value="">--</option>
+			<option value="Adamsville" class="Alabama">Adamsville</option>
+			<option value="Cottonwood" class="Alabama">Cottonwood</option>
+			<option value="sEclectic" class="Alabama">Eclectic</option>
+			<option value="Gurley" class="Alabama">Gurley</option>
+			<option value="Hollins" class="Alabama">Hollins</option>
+			<option value="Mobile" class="Alabama">Mobile</option>
+			<option value="NewHope" class="Alabama">NewHope</option>
+			<option value="Sheffield" class="Alabama">Sheffield</option>
+			<option value="SpanishFort" class="Alabama">SpanishFort</option>
+			
+			<option value="Austerlitz" class="NewYork">Austerlitz</option>		
+			<option value="Brooklyn" class="NewYork">Brooklyn</option>	
+			<option value="Cassadaga" class="NewYork">Cassadaga</option>
+			<option value="EastElmhurst" class="NewYork">EastElmhurst</option>
+			<option value="FlyCreek" class="NewYork">FlyCreek</option>
+			<option value="Haverstraw" class="NewYork">Haverstraw</option>
+			<option value="Inwood" class="NewYork">Inwood</option>
+			<option value="LakeLuzerne" class="NewYork">LakeLuzerne</option>
+			<option value="Thomson" class="NewYork">Thomson</option>
+		
+			<option value="Avery" class="California">Avery</option>
+			<option value="Anaheim" class="California">Anaheim</option>
+			<option value="Arbuckle" class="California">Arbuckle</option>
+			<option value="Arcadia" class="California">Arcadia</option>
+			<option value="Arleta" class="California">Arleta</option>
+			<option value="Baker" class="California">Baker</option>
+			<option value="Ballico" class="California">Ballico</option>
+			<option value="BirdsLanding" class="California">BirdsLanding</option>
+			<option value="BodegaBay" class="California">BodegaBay</option>
+			<option value="LosAngeles" class="California">LosAngeles</option>
+			</select>
+			<p>&nbsp;</p>
+			</form>
+		</div>
+    <p>&nbsp;</p>
+    <!-- end .sidebar1 --></div>
+  <div class="content">
+    <div class="results-div">
+	
 	<div class="results">
 
 <?php
@@ -293,7 +340,7 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 							<span class="item11" ><?php echo "Funds(needed):   " . $doc->money_needed;?></span>
 							<span class="item11" ><?php echo "Volunteers(needed):   " . $doc->volunteer_needed;?></span>
 							<span class="item11" ><?php echo "Supply(needed):   " . $doc->supplies_needed;?></span>
-							<span class="item11" ><?php echo "Influence:   " . number_format($doc->influence,3);;?></span>
+							<span class="item11" ><?php echo "Influence:   " . number_format($doc->influence,3);?></span>
 						</div>
 						<div class="detail">
 							<?php echo "Detail:   " . $doc->project_description;?>	

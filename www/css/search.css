@@ -107,7 +107,7 @@ a:hover, a:active, a:focus { /* this group of selectors will give a keyboard nav
 }
 
 .sidebar1 .type-tag{
-	background-color: black;
+	background-color: white;
 	width: 90%;
 	border:1px solid black;
 	margin-top:10px;
@@ -189,7 +189,7 @@ ul a{
     background: none repeat scroll 0px center transparent;
 }
 
-#search-type {
+.search-type {
     margin-left: 10px;
 	margin-top: 9px;
     float: left;
