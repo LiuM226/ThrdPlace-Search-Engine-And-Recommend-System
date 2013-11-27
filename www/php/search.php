@@ -21,12 +21,12 @@ if(isset($_GET['name'])){
 		unset($_SESSION['location']);
 	}
 }
-$name = null;
-$location = null;
+$location = "Louisville";
+$name = "Ew2701";
 $projectName = null;
 if (!isset($_SESSION['location'])) {
-    $location = isset($_GET['location']) ? $_GET['location'] : "No location";
-	$name = isset($_GET['name']) ? $_GET['name'] : "No name";
+    $location = isset($_GET['location']) && strcmp($_GET['location'], "")!=0 ? $_GET['location'] : "Louisville";
+	$name = isset($_GET['name']) && strcmp($_GET['name'], "") !=0 ? $_GET['name'] : "Ew2701";
 	$_SESSION['location'] = $location;
 	$_SESSION['name'] = $name;
 } else {
@@ -34,8 +34,9 @@ if (!isset($_SESSION['location'])) {
 	$location = $_SESSION['location'];
 }
 
-if($location){
+if(strcmp($location, "") != 0){
 	$filter = $location;
+
 }
 
 $results = false;
