@@ -422,20 +422,22 @@ jQuery(document).ready(function($) {
 			var response = eval("("+ json + ")");
 			userName = response.user.name;
 			userLocation = response.user.location;
-			alert(userName + " " + userLocation);
+			//alert(userName + " " + userLocation);
 			if(userName !== "" && userLocation !== ""){
-				$('#username').html(response.user.name);
-				$('#userlocation').html(response.user.location);			
+				// $('#username').html(response.user.name);
+				// $('#userlocation').html(response.user.location);		
+        window.location.href = "./php/search2.php?name=" + userName + "&location=" + userLocation;	
 			}
 			else{
 				$('#username').html("Error");
 				$('#userlocation').html("Error");
 			}
 		});
+
     });
 	
 	$('#search-btn').click(function(){
-		alert(userLocation);
+		// alert(userLocation);
 	  window.location.href = "./php/search2.php?name=" + userName + "&location=" + userLocation;
 	});
   
