@@ -1,0 +1,246 @@
+ <!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="en" class="no-js ie6 oldie">
+<![endif]-->
+<!--[if IE 7]>
+<html lang="en" class="no-js ie7 oldie">
+<![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="no-js ie8 oldie">
+<![endif]-->
+<!-- [if gt IE 8] <!-->
+<html lang="en" class="no-js">
+<!-- <![endif]-->
+<head>
+   <meta charset="utf-8">
+   <meta property="og:image" content="http://thrdplace.com/uploads/images/thumb/large/79cd7e07b4ea3c2587b00a4d59ba05df4905b0ca.jpg"/>
+   <meta property="og:title" content="Help us build Rainspiration Ranch & Transforming a Vacant Lot in the City"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>ThrdPlace</title>
+   <!--[if lt IE 9]>
+   <script src="/js/html5shiv.js"></script>
+   <!<![endif]-->
+   <link rel="stylesheet" href="http://thrdplace.com/components/fancybox/source/jquery.fancybox.css" type="text/css" media="screen" />
+   <script src="http://thrdplace.com/js/jquery.min.js"></script>
+   <script src="http://thrdplace.com/js/jquery-ui.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="http://thrdplace.com/css/jquery-ui.css" /><link rel="stylesheet" type="text/css" href="http://thrdplace.com/css/project-screen.css" /><link rel="stylesheet" type="text/css" href="http://thrdplace.com/css/project-global.css" /><link rel="stylesheet" type="text/css" href="http://thrdplace.com/css/jPages.css" />   <link rel="stylesheet" href="//serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/dojo/dijit/themes/claro/claro.css">
+   <link rel="stylesheet" href="//serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/esri/css/esri.css">
+   <script src="//serverapi.arcgisonline.com/jsapi/arcgis/3.3/"></script>
+</head>
+<body class="">
+   
+<div id="start-a-project">
+  <span class="start-project-header">Start a Project with ThrdPlace!</span>
+      <div class="left">
+        Create an account:<br />
+          <span class="teal">Sign up</span>
+          <form action="/users/register" id="signup-form" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div>          <div class="input text"><label for="first_name">First Name</label><input name="data[User][first_name]" id="first_name" maxlength="200" type="text"/></div><div class="input text"><label for="last_name">Last Name</label><input name="data[User][last_name]" id="last_name" maxlength="200" type="text"/></div><div class="input text required"><label for="register_email">Email</label><input name="data[User][email]" id="register_email" maxlength="200" type="text"/></div><div class="input text"><label for="UserLocation">Location</label><input name="data[User][location]" type="text" id="UserLocation"/></div><div class="input text"><label for="register_user">Username</label><input name="data[User][username]" id="register_user" maxlength="255" type="text"/></div><div class="input password required"><label for="register_password">Password</label><input name="data[User][password]" id="register_password" type="password"/></div><div class="input password"><label for="register_password2">Re-Enter Password</label><input name="data[User][password2]" id="register_password2" type="password"/></div>          <br/>
+            <input type="hidden" name="_submit" value="Register"/>
+            <div id ="signup-submit" class="btn">
+              Submit
+            </div>
+          </form>           <div style="clear:both;"></div>
+            <br/><br/>
+            <div id="error-register" class="error-message"></div>
+            <br/><br/>
+          By clicking submit you are agreeing to the <a id="termsofuse" href="/blog/termsofuse/">terms of use</a> regarding the thrdPlace platform
+      </div>
+            
+      <div class="right">
+              Already have an account?<br />
+          <span class="teal">Login</span>
+          <form action="/users/login" id="login-form" controller="users" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div>         <span class="label">Username</span>
+          <div class="input text"><input name="data[User][username]" id="login_user" value="" type="text"/></div><br/>
+            <div class="input password required"><label for="login_password">Password</label><input name="data[User][password]" id="login_password" type="password"/></div><br/>
+                <input type="hidden" name="_submit" value="Login"/>
+              <input name="create" type="hidden" id="create"/>
+            <a href="/users/recover">Lost Password</a>          <div id="login-submit" class="btn">Login</div> 
+            </form>           <br/><br/>
+            <div style="clear:both;"></div>
+            <div id="login-error" class="error-message"></div>
+                    
+      <span class="social">OR sign in with <br />facebook</span><br />
+      <a href="/users/store_user_data"><img src="/img/icon-fb-button.png" style="margin-right:16px;" alt="" /></a>
+<!--        <a href="twitter/twitter-login.php"><img src="/img/icon-twitter-button.png" style="margin-right:16px;" alt="" /></a>-->
+      </div>
+      <div style="clear:both;"></div>
+</div>   
+                          
+   <input id="email" type="hidden" value=""/>
+   <div id="fb-root"></div>
+   <script>
+      window.fbAsyncInit = function() {
+        // init the FB JS SDK
+        FB.init({
+          appId      : '255802944545281', // App ID from the App Dashboard
+            status     : true, // check the login status upon init?
+            cookie     : true, // set sessions cookies to allow your server to access the session?
+            xfbml      : true  // parse XFBML tags on this page?
+        });
+        // Additional initialization code such as adding Event Listeners goes here
+      }; 
+      
+      
+   </script>
+   <div id="fb-root"></div>
+   <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+   </script>
+   <header id="masthead">
+    <div id="create_flag" redirect=""></div>
+  <div class="wrap"><a href="/">
+
+<img src="http://thrdplace.com/img/new_images/beta-logo.jpg" alt="ThrdPlace" id="logo" />    </a>
+      <section class="utilityNav">
+<div class="divdr"></div>
+<div class="din bold discoverProject"><a href="/map/discover">Discover a Project</a></div>
+<div class="divdr"></div>
+<div class="din bold discoverProject" style="padding-right:15px;"><a id="createproject2" href="/projects/manage">Start a Project</a></div>
+<div class="divdr" style="padding-left:100px;"></div>
+<div class="din bold discoverProject" style="padding-right:15px;margin-left:-80px;"><a id="searchproject2" href="http://sandbox.thrdplace.com/php/contributorSearch.php">Search a Project</a></div>
+<div id="signUp" class="signUp"><a href="#start-a-project" class="signUp din bold">Sign Up // Login</a></div><a href="https://www.facebook.com/pages/ThrdPlace/287657154590667" class="facebook social" target="_blank">Facebook</a><a href="https://twitter.com/thrdplace" class="twitter social" target="_blank">Twitter</a><a href="/blog/?feed=rss2" class="rss social" target="_blank">RSS</a>  <a href="mailto:admin@thrdplace.com?subject=Build your community at thrdplace.com" class="contact social">Email</a>
+<a href="/blog" class="blog social">Blog</a>      </section>
+  </div>
+
+
+<!-- PARTENR SECTION -->
+  <div id="show-partner-form">
+    <a href="#partner-form">
+<img src="/img/new_images/partner-with-us.jpg" class="fixed-btn partner" alt="" /></a>
+  </div>
+  <div id="partner-form">
+  <div class="left">
+    <span class="partner-form-header">Want to Become a Partner?</span>
+      <p>THRDPLACE IS BUILT TO SUPPORT COMMUNITY ACTIVITY. WE UNDERSTAND THE POWER OF PARTNERSHIP. WITHOUT PEOPLE AND ORGANIZATIONS LIKE YOU, OUR COMMUNITIES WOULD NOT BE THE SAME.  </p>
+    <p>PARTNERING WITH THRDPLACE HELPS YOU TO FOCUS ON YOUR MISSION AND CREATE MORE IMPACT. WE CAN HELP INCREASE YOUR COMMUNITIES ENGAGEMENT, STREAMLINE YOUR PROJECT MANAGEMENT PROCESSES AND EXPAND YOUR REACH. </p>
+    <p>DROP US A NOTE. WE WANT TO WORK WITH YOU TO IMPROVE OUR COMMUNITIES.</p>
+
+    Cheers,<br />
+        <span class="signature">THRDPLACE STAFF</span>
+  </div>
+    <div class="right">
+      <form method="POST" action="/emails/sendPartner" id="partner-submission-form" enctype="multipart/form-data">
+            <input name="from_address" type="text" placeholder="YOUR EMAIL ADDRESS"/><br />
+
+            <input name="organization" type="text" placeholder="your organization name"/><br />
+            <input type="file" name="attatchment_1" style="height:26px"/>
+
+      <textarea name="comments" placeholder="JUST TO GIVE US A HEADS UP.....TELL US A BIT ABOUT YOUR WORK AND YOU INTEREST IN THRDPLACE."></textarea>
+<button type="submit" id="partner-form-submit" class="feedbtn send">Send</button>
+        </form>
+    </div>
+</div>
+<!-- END PARTNER SECTION -->
+
+
+<!-- FEEDBACK SECTION -->
+  <div id="show-feedback">
+    <a href="#feedback">
+      <img src="/img/new_images/feedback.jpg" class="fixed-btn feedback" alt="" />    </a>
+  </div>        
+<div id="feedback">
+  <span class="feedback-header">We love to hear from you!</span>
+  <p> The needs of our community are the primary driver for the development of the platform. So, tell us what you think thrdPlace needs. Any and all insights are appreciated...</p><p>Please submit your suggestion(s) and attach any relevant media.</p><p> Cheers, thrdPlace Staff</p>
+    From:
+    <form action="/emails/sendFeedback" id="feedback-form" enctype="multipart/form-data" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div>       <input type="hidden" name="subject" value="Feedback Form Submission">
+        <input name="from_address" type="text" value="YOUR EMAIL ADDRESS"/><br />
+
+      <input name="organization" type="text"  value="your organization name"/><br />
+        <input type="file" name="attatchment_1" style="height:26px"/>
+                
+    <textarea name="comments">JUST TO GIVE US A HEADS UP.....TELL US A BIT ABOUT YOUR WORK AND YOU INTEREST IN THRDPLACE.</textarea>
+ 
+    <button type="submit" id="partner-form-submit" class="feedbtn send">Send</button></form></div>
+
+<!-- END FEEDBACK SECTION -->
+
+<!-- OPEN PROJECTS -->
+
+<div id="open-projects">
+  <span class="start-project-header">Open Projects!</span>
+None</div>
+</header>
+                <div id="take-action-form">
+              <a class="close-btn-right" href="#">X</a>
+                <div class="left">
+                    <span class="take-action-form-header">Thanks for Contributing! </span>
+                    <p>Give us a little information that we can pass on to the project creator.  YOUR INFORMATION WILL ONLY BE PASSED ON TO THE CREATOR OF THIS PROJECT, SO THAT THEY CAN MESSAGE YOU WITH UPDATES! </p>
+                    <p>You'll receive an email with a calender invite to remind you of your contribution pledge today.  </p>  
+                    <p> Together, we ARE all the resources we need.  Thanks for being INVOLVED! </p>
+
+                    Cheers,<br />
+                     <span class="signature">THRDPLACE STAFF</span>
+
+
+                </div>
+
+                <form id="action-form">
+                <div class="right">
+                        From:
+                            <input type="hidden" id="contribute_item_modal_id">
+                            <input name="name" type="text" id="contribute_item_modal_contributor_name"  placeholder="Name" onfocus="set_value(this)" onblur="set_value(this)"/><br />
+                            <input name="from_address" type="text" id="contribute_item_modal_contributor_email" placeholder="YOUR EMAIL ADDRESS"/><br />
+
+                           Item: <span id="contribute_item_modal_name">Item Name</span><br/>
+
+                            <textarea name="comments" style="margin-top: 10px;" id="contribute_item_modal_contributor_note" onKeyDown="limitText(this.form.limitedtextarea,this.form.countdown,400);" placeholder="WE'D LOVE TO HEAR ABOUT WHY YOU WANT TO SEE THIS PROJECT HAPPEN!"></textarea>
+                            <div id="take-action-form-submit" class="btn send" onClick="submit_project_contribute2()">Send</div>
+                    </form>
+                        <div style="clear:both;"></div>
+                </div>
+            </div>            
+
+      <div id="content">
+      <input type="hidden" name="project_id" id="project_id" value="693">
+      <input type="hidden" id="map_lat" value="34.14197">
+      <input type="hidden" id="map_addr" value="223 S. Bonnie Ave. ">
+      <input type="hidden" id="map_city" value="Pasadena">
+      <input type="hidden" id="map_state" value="California">
+      <input type="hidden" id="map_lng" value="-118.11562">
+      <input type="hidden" id="map_zoom" value="12">     
+      <span style="text-align:left;" id="error"></span> 
+      <span class="project-title din med" id="title">
+         Shjstoub Grustois <div class="fancybox-media fb-like" data-layout="button_count"
+            data-font="verdana" data-href="http://trojansite.com/influence/Shjstoub.html"
+            data-send="true" data-width="150" data-show-faces="true" style="margin-top:10px;"></div>
+            <div id="twitter-share" style="display:inline-block;">
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://trojansite.com/influence/Shjstoub.html" data-size="large">Tweet</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+      </span>
+      <div id="project-images">
+         <div id="slides">
+              <div id="image_1" class="slide selected">
+               <img src="http://thrdplace.com/img/new_images/beachProfile.jpg" height="240" width="288">
+              </div>
+        </div>      
+      </div>
+         <div class="teal-text project-description din bold " style="margin-left:350px;">Description:</div>
+         <p id="topDesc" class="din bold" style="margin-left:350px"><span id="description" ><span>Shjstoub Grustois is a great contributor</span> ...<a href="#info-section" style="color: #29dccd;">READ MORE</a></p>  
+      </div>
+                                                                                            
+  
+        
+   <footer id="colophon">
+  <div class="wrap">
+    <a href="/blog/?p=1013">Join the team</a> //
+    <a href="/blog/?p=999">Contact us</a> //
+    <a href="/blog/?p=123">The team</a> //
+    <a href="/blog/">Blog</a> //
+    <a href="/blog/?p=132 ">How to create a project</a>  //
+    <a href="/blog/?cat=21">FAQs</a>// 
+    <a href="/blog/?p=1018">Terms of use</a>
+    <div class="footer-logos">
+      <img src="/img/new_images/rackspace.jpg" class="rackspace">
+        <img src="/img/new_images/logo-footer.png" style="padding-top:15px;">
+    </div>
+  </div>  
+</footer>
+   <script type="text/javascript" src="/js/jPages.min.js"></script>   <script type="text/javascript" src="/js/jquery.bxSlider.js"></script><script type="text/javascript" src="/js/cufon-yui.js"></script><script type="text/javascript" src="/js/din.font.js"></script><script type="text/javascript" src="/components/fancybox/source/jquery.fancybox.js"></script><script type="text/javascript" src="/js/scripts.js"></script><script type="text/javascript" src="/components/jquery-masonry/jquery.masonry.min.js"></script> 
+   <script type="text/javascript" src="/js/project.js"></script>   <script type="text/javascript" src="/js/jquery.placeholder.min.js"></script>   <script type="text/javascript" src="/js/project_frontend.js"></script></body>
+</html>
