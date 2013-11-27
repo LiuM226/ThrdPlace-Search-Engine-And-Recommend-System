@@ -418,7 +418,7 @@ if (true)
     <div class="search-box">
 		<FORM  accept-charset="utf-8" method="get">
 			<LABEL for = "q"></LABEL>
-			<INPUT id = "search-text" id = "q" name = "q" type = "text" placeholder="Which project do you want to search for?" value="<?php echo htmlspecialchars($query, ENT_QUOTES, 'utf-8');?>"/>
+			<INPUT id = "search-text" id = "q" name = "q" type = "text" placeholder="Search on ThrdPlace" value="<?php echo htmlspecialchars($query, ENT_QUOTES, 'utf-8');?>"/>
 			<INPUT id = "search-button" type = "submit" value="search"/>
 			<select id="search-type" class="search-type" name = "searchType">
                     <option <?php if((isset($searchType) && $searchType === "Project")) echo "selected = \"selected\""?>>Project</option>
@@ -568,7 +568,7 @@ if (true)
 	<H6 class="section-title">RECOMMADATION</H3>
 	<div class="influential-project" align="center">Most Influencial Project</div>	
 	<div class="recommended_project">
-		<a href="http://trojansite.com/influence/project1.html"><img src="../img/PR.jpg" width="100%" height="100%"></img></a>
+		<a href="projects/project1.html"><img src="../img/PR.jpg" width="100%" height="100%"></img></a>
 	</div>
 		
 <?php

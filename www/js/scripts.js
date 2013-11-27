@@ -436,7 +436,7 @@ jQuery(document).ready(function($) {
 	
 	$('#search-btn').click(function(){
 		alert(userLocation);
-	  window.location.href = "./php/search.php?name=" + userName + "&location=" + userLocation;
+	  window.location.href = "./php/search2.php?name=" + userName + "&location=" + userLocation;
 	});
   
   
