@@ -221,8 +221,10 @@ None</div>
         </div>      
       </div>
          <div class="teal-text project-description din bold " style="margin-left:350px;">Description:</div>
-         <p id="topDesc" class="din bold" style="margin-left:350px"><span id="description" ><span>Yn Jinnjss is a great contributor</span> ...<a href="#info-section" style="color: #29dccd;">READ MORE</a></p>  
-      </div>
+         <p id="topDesc" class="din bold" style="margin-left:350px;min-height:0px"><span id="description" ><span>Yn Jinnjss is a great contributor</span> ...<a href="#info-section" style="color: #29dccd;">READ MORE</a></p>  
+		 <div class="teal-text project-description din bold " style="margin-left:350px;">Recent Project:</div>
+		 <p class="din bold" style="margin-left:350px"><span id="contributor-project"></span></p>
+	  </div>
                                                                                             
   
         
@@ -241,6 +243,18 @@ None</div>
     </div>
   </div>  
 </footer>
+   <script>
+		urlinfo=window.location.href;
+		len=urlinfo.length;
+		offset=urlinfo.indexOf("?");
+		newsidinfo=urlinfo.substr(offset,len);
+		newsids=newsidinfo.split("=");
+		newsid=newsids[1];
+		document.getElementById("contributor-project").innerHTML = decodeURIComponent(newsid);
+</script>
+
    <script type="text/javascript" src="/js/jPages.min.js"></script>   <script type="text/javascript" src="/js/jquery.bxSlider.js"></script><script type="text/javascript" src="/js/cufon-yui.js"></script><script type="text/javascript" src="/js/din.font.js"></script><script type="text/javascript" src="/components/fancybox/source/jquery.fancybox.js"></script><script type="text/javascript" src="/js/scripts.js"></script><script type="text/javascript" src="/components/jquery-masonry/jquery.masonry.min.js"></script> 
    <script type="text/javascript" src="/js/project.js"></script>   <script type="text/javascript" src="/js/jquery.placeholder.min.js"></script>   <script type="text/javascript" src="/js/project_frontend.js"></script></body>
-</html>
+
+  
+ </html>
