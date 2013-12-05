@@ -220,7 +220,7 @@ if (true)
    </script>
    <header id="masthead">
     <div id="create_flag" redirect=""></div>
-  	<div class="wrap"><a href="/">
+  	<div class="wrap"><a href="../thrdplace.html">
 		<img src="http://thrdplace.com/img/new_images/beta-logo.jpg" alt="ThrdPlace" id="logo" />    </a>
 		      <section class="utilityNav">
 		<div class="divdr"></div>
