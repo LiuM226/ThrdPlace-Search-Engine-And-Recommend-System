@@ -228,7 +228,7 @@ if (true)
 		<div class="divdr"></div>
 		<div class="din bold discoverProject" style="padding-right:15px;"><a id="createproject2" href="/projects/manage">Start a Project</a></div>
 		<div class="divdr" style="padding-left:100px;"></div>
-		<div class="din bold discoverProject" style="padding-right:15px;margin-left:-80px;"><a id="searchproject2" href="http://sandbox.thrdplace.com/php/contributorSearch2.php">Search a Project</a></div>
+		<div class="din bold discoverProject" style="padding-right:15px;margin-left:-80px;margin-top:10px"><a id="searchproject2" href="http://sandbox.thrdplace.com/php/contributorSearch2.php">Search</a></div>
 		<div id="signUp" class="signUp"><a href="#start-a-project" class="signUp din bold">Sign Up // Login</a></div><a href="https://www.facebook.com/pages/ThrdPlace/287657154590667" class="facebook social" target="_blank">Facebook</a><a href="https://twitter.com/thrdplace" class="twitter social" target="_blank">Twitter</a><a href="/blog/?feed=rss2" class="rss social" target="_blank">RSS</a>  <a href="mailto:admin@thrdplace.com?subject=Build your community at thrdplace.com" class="contact social">Email</a>
 		<a href="/blog" class="blog social">Blog</a>      </section>
 		  </div>
