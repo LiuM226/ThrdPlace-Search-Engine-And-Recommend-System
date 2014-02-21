@@ -568,7 +568,7 @@ if (true)
 	<H6 class="section-title">RECOMMADATION</H3>
 	<div class="influential-project" align="center">Most Influencial Project</div>	
 	<div class="recommended_project">
-		<a href="/projects/project1.html"><img src="../img/PR.jpg" width="100%" height="100%"></img></a>
+		<a href="projects/project1.html"><img src="../img/PR.jpg" width="100%" height="100%"></img></a>
 	</div>
 		
 <?php
