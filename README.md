@@ -13,3 +13,10 @@ This is a project implemented in the Software Engineering course at University o
 * Build on Apache Solr
   * Provide advanced search among several Solr collections with sorting and faceted search.
   * Identify recommendation abstracts by querying the Carrot2 clustering engine on Solr.
+
+##Apache Solr
+ * enterprise-level search engine
+ * full-text search, hit highlight, faceted search, dynamic clustering, database integration, and support rich document(PDF, word) 
+ * Written in **Java**, runs as a standalone server within a servlet container such as Tomcat or Jetty
+ * Uses **Lucene** as core library
+ * Provide REST-like HTTP/XML and JSON APIs
